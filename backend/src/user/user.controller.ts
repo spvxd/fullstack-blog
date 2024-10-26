@@ -14,7 +14,7 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
   @Get()
-  findAll(id) {
+  findAll(id: string) {
     return this.userService.findOne(id);
   }
 
