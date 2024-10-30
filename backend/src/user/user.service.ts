@@ -14,10 +14,13 @@ export class UserService {
 
   }
   async create(createUserDto: CreateUserDto) {
-    const existUser = await this.userRepository.findOne({ where: { email: createUserDto.email } })
-    if (existUser) throw new BadRequestException('This email is already taken')
+    const existUserEmail = await this.userRepository.findOne({ where: { email: createUserDto.email } })
+    if (existUserEmail) throw new BadRequestException('This email is already taken')
+      const existUsername = await this.userRepository.findOne({ where: { username: createUserDto.username } })
+    if (existUsername) throw new BadRequestException('This username is already taken')
     const newUser = await this.userRepository.save({
       email: createUserDto.email,
+      username: createUserDto.username,
       password: await argon2.hash(createUserDto.password)
     })
     return newUser;
@@ -25,9 +28,12 @@ export class UserService {
 
 
 
-  async findOne(email: string) {
-    return await this.userRepository.findOne({ where: { email } });
+  async findOne(login: string) {
+    const user = login.includes('@') ? await this.userRepository.findOne({ where: { email: login } }) : await this.userRepository.findOne({ where: { username: login } });
+    return user
   }
+
+
 
 
 }
