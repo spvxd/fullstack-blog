@@ -5,7 +5,6 @@ import { User } from 'src/user/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from './entities/post.entity';
 import { Repository } from 'typeorm';
-import { log } from 'console';
 
 @Injectable()
 export class PostsService {
@@ -19,9 +18,12 @@ export class PostsService {
     return this.postRepository.save({...createPostDto, author: user})
   }
 
-  async findAll() {
-    return this.postRepository.find({relations: ['author'], select: {author: {username: true}}})
-  
+  async findAll(page, limit) {
+    const take = limit > 0 ? limit : 10; 
+    const offset = (page - 1 ) * take;
+    const [data, total] =  await this.postRepository.findAndCount({skip: offset, take, relations: ['author'], select: {author: {username: true}}, order: { createdAt: 'DESC'}})
+    console.log(data, total)
+    return {data, total, page}
   }
 
   async findOne(id: number) { 
