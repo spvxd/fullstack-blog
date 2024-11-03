@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { PostsModule } from './posts/posts.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true }), TypeOrmModule.forRootAsync({
@@ -21,7 +22,7 @@ import { PostsModule } from './posts/posts.module';
       entities: [__dirname + '/**/*.entity{.js, .ts}']
     }),
     inject: [ConfigService]
-  }), AuthModule, UserModule, PostsModule],
+  }), AuthModule, UserModule, PostsModule, CommentsModule],
   controllers: [AppController],
   providers: [AppService],
 })
