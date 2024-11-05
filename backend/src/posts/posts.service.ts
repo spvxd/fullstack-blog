@@ -14,7 +14,6 @@ export class PostsService {
   ) { }
 
   async create(createPostDto: CreatePostDto, user: User): Promise<Post> {
-    console.log(user)
     return this.postRepository.save({...createPostDto, author: user})
   }
 
