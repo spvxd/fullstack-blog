@@ -8,12 +8,14 @@ export class User {
     id: number
     
     @Column()
+    @Exclude()
     email: string
 
     @Column()
     username: string
 
     @Column()
+    @Exclude()
     password: string
 
     @CreateDateColumn()
