@@ -15,6 +15,7 @@ import {CommentsService} from './comments.service';
 import {CreateCommentDto} from './dto/create-comment.dto';
 import {UpdateCommentDto} from './dto/update-comment.dto';
 import {JwtAuthGuard} from "../auth/guards/jwt-auth.guard";
+import {UpdatePostDto} from "../posts/dto/update-post.dto";
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('posts/:postId/comments')
@@ -35,11 +36,19 @@ export class CommentsController {
     showComments(@Param('postId') postId: string) {
         return this.commentsService.findPostWithComments(+postId);
     }
+
     @Delete(':commentId')
     @UseGuards(JwtAuthGuard)
     delete(@Param('commentId') commentId: string, @Request() req: any) {
         const user = req.user
         return this.commentsService.deleteComment(+commentId, user);
+    }
+
+    @Patch(':commentId')
+    @UseGuards(JwtAuthGuard)
+    update(@Param('commentId') commentId: string, @Request() req: any,@Body() updateCommentDto: UpdateCommentDto) {
+        const user = req.user
+        return this.commentsService.updateComment(+commentId, user, updateCommentDto);
     }
 
 }

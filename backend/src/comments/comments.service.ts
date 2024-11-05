@@ -98,4 +98,19 @@ export class CommentsService {
         return comment
     }
 
+    async updateComment(commentId: number, user: User, updateCommentDto: UpdateCommentDto){
+        const comment = await this.commentsRepository.findOne({where: {id: commentId}})
+        if (!comment) {
+            throw new NotFoundException(`Комментарий с id ${commentId} не найден`);
+        }
+        if (comment.author.id !== user.id) {
+            throw new ForbiddenException('У вас нет прав на удаление этого комментария')
+        }
+        console.log(comment)
+        Object.assign(comment, updateCommentDto)
+        await this.commentsRepository.save(comment)
+        return comment
+
+    }
+
 }
