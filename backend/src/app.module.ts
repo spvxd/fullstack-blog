@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
+import { LikesModule } from './likes/likes.module';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true }), TypeOrmModule.forRootAsync({
@@ -22,7 +23,7 @@ import { CommentsModule } from './comments/comments.module';
       entities: [__dirname + '/**/*.entity{.js, .ts}']
     }),
     inject: [ConfigService]
-  }), AuthModule, UserModule, PostsModule, CommentsModule],
+  }), AuthModule, UserModule, PostsModule, CommentsModule, LikesModule],
   controllers: [AppController],
   providers: [AppService],
 })
