@@ -2,6 +2,7 @@ import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, One
 import { User } from '../../user/entities/user.entity';
 import { Post } from '../../posts/entities/post.entity';
 import {Exclude} from "class-transformer";
+import {Like} from "../../likes/entities/like.entity";
 
 @Entity()
 export class Comment {
@@ -20,9 +21,12 @@ export class Comment {
     @ManyToOne(() => Post, (post) => post.comments, { onDelete: 'CASCADE' })
     post: Post;
 
-    @ManyToOne(() => Comment, comment => comment.children, { nullable: true })
+    @ManyToOne(() => Comment, (comment) => comment.children, { nullable: true })
     parent: Comment;
 
-    @OneToMany(() => Comment, comment => comment.parent)
+    @OneToMany(() => Comment, (comment) => comment.parent)
     children: Comment[];
+
+    @OneToMany(() => Like, (like) => like.comment)
+    likes: Like[];
 }

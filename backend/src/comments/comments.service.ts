@@ -68,8 +68,9 @@ export class CommentsService {
     async findPostWithComments(postId: number): Promise<Comment[]> {
         const comments = await this.commentsRepository.find({
             where: {post: {id: postId}},
-            relations: ['author', 'parent'], // Добавляем 'parent' в relations
+            relations: ['author', 'parent', 'likes'], // Добавляем 'parent' в relations
             order: {createdAt: 'ASC'},
+            select: {likes: {id: true}}
 
         });
 

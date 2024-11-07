@@ -20,8 +20,7 @@ export class PostsService {
   async findAll(page, limit) {
     const take = limit > 0 ? limit : 10; 
     const offset = (page - 1 ) * take;
-    const [data, total] =  await this.postRepository.findAndCount({skip: offset, take, relations: ['author'], select: {author: {username: true}}, order: { createdAt: 'DESC'}})
-    console.log(data, total)
+    const [data, total] =  await this.postRepository.findAndCount({skip: offset, take, relations: ['author', 'likes'], select: {author: {username: true}, likes: {id: true}}, order: { createdAt: 'DESC'}})
     return {data, total, page}
   }
 

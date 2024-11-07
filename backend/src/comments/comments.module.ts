@@ -5,6 +5,7 @@ import {TypeOrmModule} from "@nestjs/typeorm";
 import {Post} from "../posts/entities/post.entity";
 import {Comment} from "./entities/comment.entity";
 import {PostsModule} from "../posts/posts.module";
+import {LikesModule} from "../likes/likes.module";
 
 @Module({
     imports: [
@@ -12,6 +13,7 @@ import {PostsModule} from "../posts/posts.module";
     ],
     controllers: [CommentsController],
     providers: [CommentsService],
+    exports: [TypeOrmModule]
 })
 export class CommentsModule {
 }
