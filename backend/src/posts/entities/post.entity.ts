@@ -2,7 +2,7 @@ import { User } from "src/user/entities/user.entity";
 import {
     Column,
     CreateDateColumn,
-    Entity,
+    Entity, JoinTable, ManyToMany,
     ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
@@ -10,6 +10,7 @@ import {
 } from "typeorm";
 import { Comment } from '../../comments/entities/comment.entity';
 import {Like} from "../../likes/entities/like.entity";
+import {Tag} from "../../tags/entities/tag.entity";
 @Entity()
 export class Post {
     @PrimaryGeneratedColumn()
@@ -39,5 +40,9 @@ export class Post {
 
     @OneToMany(() => Like, (like) => like.post)
     likes: Like[]
+
+    @ManyToMany(() => Tag, (tag) => tag.posts, { cascade: true })
+    @JoinTable()
+    tags: Tag[];
 
 }
