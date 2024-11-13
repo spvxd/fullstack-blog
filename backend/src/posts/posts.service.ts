@@ -15,7 +15,14 @@ export class PostsService {
         @InjectRepository(Tag)
         private readonly tagRepository: Repository<Tag>
     ) {
-    }
+  constructor(
+    @InjectRepository(Post)
+    private readonly postRepository: Repository<Post>
+  ) { }
+
+
+
+
 
     async create(createPostDto: CreatePostDto, user: User): Promise<Post> {
         const {tags, content} = createPostDto;

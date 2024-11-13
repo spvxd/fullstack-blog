@@ -10,7 +10,9 @@ import {
 } from "typeorm";
 import { Comment } from '../../comments/entities/comment.entity';
 import {Like} from "../../likes/entities/like.entity";
+
 import {Tag} from "../../tags/entities/tag.entity";
+
 @Entity()
 export class Post {
     @PrimaryGeneratedColumn()
@@ -44,5 +46,6 @@ export class Post {
     @ManyToMany(() => Tag, (tag) => tag.posts, { cascade: true })
     @JoinTable()
     tags: Tag[];
+
 
 }
